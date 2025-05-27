@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام تسجيل الدخول والخروج</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    select, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+    }
+    table {
+      margin-top: 30px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #007b55;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>نظام تسجيل الدخول والخروج</h2>
+    <select id="employeeName">
+      <option value="">اختر اسم الموظف</option>
+      <option value="ناجي">ناجي</option>
+      <option value="هشام">هشام</option>
+      <option value="أحمد">أحمد</option>
+      <option value="إبراهيم">إبراهيم</option>
+      <option value="عبدالله">عبدالله</option>
+    </select>
+    <button onclick="recordEntry()">تسجيل دخول / خروج</button>
+    <table>
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>التاريخ</th>
+          <th>الوقت</th>
+          <th>العملية</th>
+        </tr>
+      </thead>
+      <tbody id="logTable"></tbody>
+    </table>
+  </div>
+
+  <script>
+    let employeeLog = {};
+
+    function recordEntry() {
+      const name = document.getElementById("employeeName").value;
+      if (!name) {
+        alert("يرجى اختيار اسم الموظف");
+        return;
+      }
+
+      const now = new Date();
+      const date = now.toLocaleDateString('ar-EG');
+      const time = now.toLocaleTimeString('ar-EG');
+      const lastStatus = employeeLog[name] === "دخول" ? "خروج" : "دخول";
+      employeeLog[name] = lastStatus;
+
+      const table = document.getElementById("logTable");
+      const row = table.insertRow(0);
+      row.insertCell(0).textContent = name;
+      row.insertCell(1).textContent = date;
+      row.insertCell(2).textContent = time;
+      row.insertCell(3).textContent = lastStatus;
+    }
+  </script>
+</body>
+</html>
